@@ -1,0 +1,40 @@
+/* 
+    case / when
+
+    é como um “if/else” usado para criar colunas condicionais ou definir regras dentro de consultas
+    ele permite avaliar condições e retornar valores diferentes com base nelas
+*/ 
+
+SELECT * FROM TABELA_DE_PRODUTOS;
+
+SELECT NOME_DO_PRODUTO, PRECO_DE_LISTA,
+(CASE WHEN PRECO_DE_LISTA >12 THEN 'PRODUTO CARO' 
+      WHEN PRECO_DE_LISTA >= 7 AND PRECO_DE_LISTA < 12 THEN 'PRODUTO EM CONTA' 
+      ELSE 'PRODUTO BARATO' END) AS CLASSIFICACAO 
+FROM TABELA_DE_PRODUTOS 
+WHERE SABOR = 'Manga';
+
+SELECT
+(CASE WHEN PRECO_DE_LISTA >12 THEN 'PRODUTO CARO' 
+      WHEN PRECO_DE_LISTA >= 7 AND PRECO_DE_LISTA < 12 THEN 'PRODUTO EM CONTA' 
+      ELSE 'PRODUTO BARATO' END) AS CLASSIFICACAO, COUNT(*) AS NUMERO_DE_PRODUTOS
+FROM TABELA_DE_PRODUTOS 
+GROUP BY (CASE WHEN PRECO_DE_LISTA >12 THEN 'PRODUTO CARO' 
+      WHEN PRECO_DE_LISTA >= 7 AND PRECO_DE_LISTA < 12 THEN 'PRODUTO EM CONTA' 
+      ELSE 'PRODUTO BARATO' END); 
+ 
+/*
+DESAFIO
+    Para cada cliente temos seus limites de crédito mensais. Liste somente o nome dos clientes e os classifique por:
+    Acima ou igual a 150.000 - Clientes grandes
+    Entre 150.000 e 110.000 - Clientes médios
+    Menores que 110.000 Clientes pequenos
+*/
+
+SELECT * FROM TABELA_DE_CLIENTES;
+
+SELECT NOME,
+(CASE WHEN LIMITE_DE_CREDITO >= 150000 THEN 'CLIENTE GRANDE'
+      WHEN LIMITE_DE_CREDITO >= 110000 AND LIMITE_DE_CREDITO < 150000 THEN 'CLIENTE MEDIO'
+      ELSE 'CLIENTE PEQUENO' END) AS CLASSIFICACAO
+FROM TABELA_DE_CLIENTES;
